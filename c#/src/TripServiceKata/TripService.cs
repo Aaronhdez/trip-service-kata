@@ -15,12 +15,10 @@ namespace TripServiceKata {
         }
 
         public List<Trip> GetTripsByUser(User user) {
-            var tripList = new List<Trip>();
             var loggedUser = _userSession.GetLoggedUser();
             if (loggedUser != null) {
-                if (!Enumerable.Contains(user.GetFriends(), loggedUser)) return tripList;
-                tripList = _tripDao.FindTripsByUser(user);
-                return tripList;
+                if (!Enumerable.Contains(user.GetFriends(), loggedUser)) return new List<Trip>();
+                return _tripDao.FindTripsByUser(user);
             }
             else {
                 throw new UserNotLoggedInException();
