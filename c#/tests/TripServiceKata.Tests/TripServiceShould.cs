@@ -10,13 +10,15 @@ namespace TripServiceKata.Tests {
         private IUserSession _userSession;
         private User _defaultUser;
         private TripService _tripService;
+        private ITripDAO _tripDao;
 
         [SetUp]
         public void SetUp() {
             _userSession = Substitute.For<IUserSession>();
+            _tripDao = Substitute.For<ITripDAO>();
             _defaultUser = new User();
             _userSession.GetLoggedUser().Returns(_defaultUser);
-            _tripService = new TripService(_userSession);
+            _tripService = new TripService(_userSession, _tripDao);
         }
         
         [Test]
@@ -32,6 +34,7 @@ namespace TripServiceKata.Tests {
         public void RetrieveNonEmptyListIfUserIsAFriend() {
             var anotherUser = new User();
             anotherUser.AddFriend(_defaultUser);
+            _tripDao.FindTripsByUser(anotherUser).Returns(new List<Trip>(new[] { new Trip() }));
 
             var tripList = _tripService.GetTripsByUser(anotherUser);
 
