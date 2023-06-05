@@ -25,12 +25,12 @@ namespace TripServiceKata
             {
                 if (Enumerable.Contains(user.GetFriends(), loggedUser)) {
                     isFriend = true;
+                    if (isFriend)
+                    {
+                        tripList = _tripDao.FindTripsByUser(user);
+                    }
                 }
 
-                if (isFriend)
-                {
-                    tripList = _tripDao.FindTripsByUser(user);
-                }
 
                 return tripList;
             }
