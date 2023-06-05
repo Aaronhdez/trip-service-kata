@@ -7,7 +7,7 @@ using TripServiceKata.Service;
 namespace TripServiceKata {
     public class TripService {
         private readonly IUserSession _userSession;
-        private ITripDAO _tripDao;
+        private readonly ITripDAO _tripDao;
 
         public TripService(IUserSession userSession, ITripDAO tripDao) {
             _userSession = userSession;
@@ -21,9 +21,7 @@ namespace TripServiceKata {
                     new List<Trip>() : 
                     _tripDao.FindTripsByUser(user);
             }
-            else {
-                throw new UserNotLoggedInException();
-            }
+            throw new UserNotLoggedInException();
         }
     }
 }
