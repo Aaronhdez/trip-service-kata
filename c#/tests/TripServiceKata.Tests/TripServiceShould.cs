@@ -7,15 +7,23 @@ using TripServiceKata.Service;
 
 namespace TripServiceKata.Tests {
     public class TripServiceShould {
+        private IUserSession _userSession;
+        private User _defaultUser;
+        private TripService _tripService;
+
+        [SetUp]
+        public void SetUp() {
+            _userSession = Substitute.For<IUserSession>();
+            _defaultUser = new User();
+            _userSession.GetLoggedUser().Returns(_defaultUser);
+            _tripService = new TripService(_userSession);
+        }
+        
         [Test]
         public void RetrieveEmptyListIfUserIsNotAFriend() {
-            var userSession = Substitute.For<IUserSession>();
-            var user = new User();
             var anotherUser = new User();
-            userSession.GetLoggedUser().Returns(user);
-            TripService tripService = new TripService(userSession);
 
-            List<Trip> tripList = tripService.GetTripsByUser(anotherUser);
+            var tripList = _tripService.GetTripsByUser(anotherUser);
 
             tripList.Should().BeEmpty();
         }
