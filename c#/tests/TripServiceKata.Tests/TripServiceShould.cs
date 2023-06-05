@@ -27,5 +27,15 @@ namespace TripServiceKata.Tests {
 
             tripList.Should().BeEmpty();
         }
+        
+        [Test]
+        public void RetrieveNonEmptyListIfUserIsAFriend() {
+            var anotherUser = new User();
+            anotherUser.AddFriend(_defaultUser);
+
+            var tripList = _tripService.GetTripsByUser(anotherUser);
+
+            tripList.Should().NotBeEmpty();
+        }
     }
 }
