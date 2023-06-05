@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using TripServiceKata.Entity;
+using TripServiceKata.Exception;
 using TripServiceKata.Service;
 
 namespace TripServiceKata.Tests {
@@ -39,6 +41,15 @@ namespace TripServiceKata.Tests {
             var tripList = _tripService.GetTripsByUser(anotherUser);
 
             tripList.Should().NotBeEmpty();
+        }
+
+        [Test]
+        public void ThrowExceptionIfUserIsNotLogged() {
+            _userSession.GetLoggedUser().Returns((User) null);
+
+            Action result = () => _tripService.GetTripsByUser(_defaultUser);
+
+            result.Should().Throw<UserNotLoggedInException>();
         }
     }
 }
