@@ -14,7 +14,7 @@ namespace TripServiceKata {
             _tripDao = tripDao;
         }
 
-        public List<Trip> GetTripsByUser(User user) {
+        public IEnumerable<Trip> GetTripsByUser(User user) {
             var loggedUser = _userSession.GetLoggedUser();
             if (loggedUser != null) {
                 return !Enumerable.Contains(user.GetFriends(), loggedUser) ?
