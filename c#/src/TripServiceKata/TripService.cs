@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TripServiceKata.Entity;
 using TripServiceKata.Exception;
 using TripServiceKata.Service;
@@ -17,18 +18,13 @@ namespace TripServiceKata
 
         public List<Trip> GetTripsByUser(User user)
         {
-            List<Trip> tripList = new List<Trip>();
-            User loggedUser = _userSession.GetLoggedUser();
-            bool isFriend = false;
+            var tripList = new List<Trip>();
+            var loggedUser = _userSession.GetLoggedUser();
+            var isFriend = false;
             if (loggedUser != null)
             {
-                foreach (User friend in user.GetFriends())
-                {
-                    if (friend.Equals(loggedUser))
-                    {
-                        isFriend = true;
-                        break;
-                    }
+                if (Enumerable.Contains(user.GetFriends(), loggedUser)) {
+                    isFriend = true;
                 }
 
                 if (isFriend)
