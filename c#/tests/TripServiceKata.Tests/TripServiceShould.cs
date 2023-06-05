@@ -9,10 +9,10 @@ using TripServiceKata.Service;
 
 namespace TripServiceKata.Tests {
     public class TripServiceShould {
-        private IUserSession _userSession;
         private User _defaultUser;
-        private TripService _tripService;
         private ITripDAO _tripDao;
+        private TripService _tripService;
+        private IUserSession _userSession;
 
         [SetUp]
         public void SetUp() {
@@ -22,7 +22,7 @@ namespace TripServiceKata.Tests {
             _userSession.GetLoggedUser().Returns(_defaultUser);
             _tripService = new TripService(_userSession, _tripDao);
         }
-        
+
         [Test]
         public void RetrieveEmptyListIfUserIsNotAFriend() {
             var anotherUser = new User();
@@ -31,7 +31,7 @@ namespace TripServiceKata.Tests {
 
             tripList.Should().BeEmpty();
         }
-        
+
         [Test]
         public void RetrieveNonEmptyListIfUserIsAFriend() {
             var anotherUser = new User();
@@ -45,7 +45,7 @@ namespace TripServiceKata.Tests {
 
         [Test]
         public void ThrowExceptionIfUserIsNotLogged() {
-            _userSession.GetLoggedUser().Returns((User) null);
+            _userSession.GetLoggedUser().Returns((User)null);
 
             Action result = () => _tripService.GetTripsByUser(_defaultUser);
 

@@ -1,6 +1,3 @@
-﻿namespace TripServiceKata.Entity
-{
-    public class Trip
-    {
-    }
+﻿namespace TripServiceKata.Entity {
+    public class Trip { }
 }
