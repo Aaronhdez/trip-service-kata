@@ -10,11 +10,6 @@ namespace TripServiceKata.Service
         {
         }
 
-        public static IUserSession GetInstance()
-        {
-            return userSession;
-        }
-
         public bool IsUserLoggedIn(User user)
         {
             throw new DependendClassCallDuringUnitTestException(
