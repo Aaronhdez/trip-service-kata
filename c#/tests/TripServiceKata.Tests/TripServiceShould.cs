@@ -32,5 +32,19 @@ namespace TripServiceKata.Tests {
 
             result.Should().BeEmpty();
         }
+        
+        [Test]
+        public void ACharacterizationTest() {
+            var user = new User();
+            var userSession = Substitute.For<IUserSession>();
+            userSession.GetLoggedUser().Returns(user);
+            var tripService = new TripService(userSession);
+            var friend = new User();
+            user.AddFriend(friend);
+
+            var result = tripService.GetTripsByUser(user);
+
+            result.Should().BeEmpty();
+        }
     }
 }
