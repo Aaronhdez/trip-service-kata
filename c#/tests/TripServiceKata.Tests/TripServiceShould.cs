@@ -78,7 +78,7 @@ namespace TripServiceKata.Tests {
         }
 
         [Test]
-        public void ACharacterizationTest()
+        public void ReturnsAListWithOneTripWhenATripIsAddedToAFriend()
         {
             var friend = new User();
             var trip = new Trip();
