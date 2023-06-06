@@ -63,5 +63,19 @@ namespace TripServiceKata.Tests {
 
             result.Should().BeEmpty();
         }
+        
+        
+        [Test]
+        public void ACharacterizationTest()
+        {
+            defaultUser.AddFriend(defaultUser);
+            userSession.GetLoggedUser().Returns(defaultUser);
+            var trip = new Trip();
+            tripDao.FindTripsByUser(defaultUser).Returns(new List<Trip>(new[] { trip }));
+
+            var result = tripService.GetTripsByUser(defaultUser);
+
+            result.Should().ContainEquivalentOf(trip);
+        }
     }
 }
