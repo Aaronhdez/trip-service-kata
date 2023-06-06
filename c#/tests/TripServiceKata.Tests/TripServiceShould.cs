@@ -34,7 +34,7 @@ namespace TripServiceKata.Tests {
         }
         
         [Test]
-        public void ACharacterizationTest() {
+        public void ReturnEmptyListIfLoggedUserIsNotAFriend() {
             var user = new User();
             var userSession = Substitute.For<IUserSession>();
             userSession.GetLoggedUser().Returns(user);
