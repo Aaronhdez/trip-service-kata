@@ -53,7 +53,7 @@ namespace TripServiceKata.Tests {
         }
         
         [Test]
-        public void ACharacterizationTest()
+        public void ReturnEmptyListIfLoggedUserIsAFriend()
         {
             defaultUser.AddFriend(defaultUser);
             userSession.GetLoggedUser().Returns(defaultUser);
