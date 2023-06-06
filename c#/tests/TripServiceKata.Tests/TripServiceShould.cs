@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -56,6 +57,7 @@ namespace TripServiceKata.Tests {
         {
             defaultUser.AddFriend(defaultUser);
             userSession.GetLoggedUser().Returns(defaultUser);
+            tripDao.FindTripsByUser(defaultUser).Returns(new List<Trip>());
 
             var result = tripService.GetTripsByUser(defaultUser);
 
