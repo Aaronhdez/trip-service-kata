@@ -9,7 +9,7 @@ using TripServiceKata.Service;
 namespace TripServiceKata.Tests {
     public class TripServiceShould {
         [Test]
-        public void ACharacterizationTest() {
+        public void FailIfUserIsNotLoggedIn() {
             var userSession = Substitute.For<IUserSession>();
             var tripService = new TripService(userSession);
             userSession.GetLoggedUser().Returns((User) null);
