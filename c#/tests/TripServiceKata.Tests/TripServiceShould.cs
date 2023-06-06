@@ -64,7 +64,6 @@ namespace TripServiceKata.Tests {
             result.Should().BeEmpty();
         }
         
-        
         [Test]
         public void ReturnsAListWIthOneTripWhenATripIsAdded()
         {
@@ -74,6 +73,20 @@ namespace TripServiceKata.Tests {
             tripDao.FindTripsByUser(defaultUser).Returns(new List<Trip>(new[] { trip }));
 
             var result = tripService.GetTripsByUser(defaultUser);
+
+            result.Should().ContainEquivalentOf(trip);
+        }
+
+        [Test]
+        public void ACharacterizationTest()
+        {
+            var friend = new User();
+            var trip = new Trip();
+            friend.AddFriend(defaultUser);
+            userSession.GetLoggedUser().Returns(defaultUser);
+            tripDao.FindTripsByUser(friend).Returns(new List<Trip>(new[] { trip }));
+
+            var result = tripService.GetTripsByUser(friend);
 
             result.Should().ContainEquivalentOf(trip);
         }
