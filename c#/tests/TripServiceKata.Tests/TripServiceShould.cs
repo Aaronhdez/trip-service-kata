@@ -21,7 +21,7 @@ namespace TripServiceKata.Tests {
         }  
         
         [Test]
-        public void ACharacterizationTest() {
+        public void ReturnEmptyListIfLoggedUserIsNotCurrentUser() {
             var userSession = Substitute.For<IUserSession>();
             var tripService = new TripService(userSession);
             var returnedUser = new User();
