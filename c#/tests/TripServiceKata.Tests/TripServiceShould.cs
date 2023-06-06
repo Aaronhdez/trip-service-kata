@@ -48,5 +48,16 @@ namespace TripServiceKata.Tests {
 
             result.Should().BeEmpty();
         }
+        
+        [Test]
+        public void ACharacterizationTest()
+        {
+            defaultUser.AddFriend(defaultUser);
+            userSession.GetLoggedUser().Returns(defaultUser);
+
+            var result = tripService.GetTripsByUser(defaultUser);
+
+            result.Should().BeEmpty();
+        }
     }
 }
