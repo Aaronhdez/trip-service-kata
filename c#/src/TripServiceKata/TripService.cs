@@ -4,10 +4,8 @@ using TripServiceKata.Entity;
 using TripServiceKata.Exception;
 using TripServiceKata.Service;
 
-namespace TripServiceKata
-{
-    public class TripService
-    {
+namespace TripServiceKata {
+    public class TripService {
         private readonly IUserSession userSession;
         private readonly ITripDAO tripDao;
 
@@ -16,17 +14,14 @@ namespace TripServiceKata
             this.tripDao = tripDao;
         }
 
-        public List<Trip> GetTripsByUser(User user)
-        {
-            var tripList = new List<Trip>();
+        public List<Trip> GetTripsByUser(User user) {
             var loggedUser = userSession.GetLoggedUser();
             if (loggedUser == null) throw new UserNotLoggedInException();
-            if (Enumerable.Contains(user.GetFriends(), loggedUser)) {
-                tripList = tripDao.FindTripsByUser(user);
+            if (user.IsAFriend(loggedUser)) {
+                return tripDao.FindTripsByUser(user);
             }
 
-            return tripList;
-
+            return new List<Trip>();
         }
     }
 }

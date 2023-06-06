@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TripServiceKata.Entity
 {
@@ -6,14 +7,13 @@ namespace TripServiceKata.Entity
     {
         private List<User> friends = new List<User>();
 
-        public List<User> GetFriends()
-        {
-            return friends;
-        }
-
         public void AddFriend(User user)
         {
             friends.Add(user);
+        }
+
+        public bool IsAFriend(User loggedUser) {
+            return friends.Contains(loggedUser);
         }
     }
 }
