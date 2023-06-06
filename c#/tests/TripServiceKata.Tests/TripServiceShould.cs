@@ -8,41 +8,43 @@ using TripServiceKata.Service;
 
 namespace TripServiceKata.Tests {
     public class TripServiceShould {
+        private IUserSession userSession;
+        private TripService tripService;
+        private User defaultUser;
+
+        [SetUp]
+        public void SetUp() {
+            userSession = Substitute.For<IUserSession>();
+            tripService = new TripService(userSession);
+            defaultUser = new User();
+        }
+
         [Test]
         public void FailIfUserIsNotLoggedIn() {
-            var userSession = Substitute.For<IUserSession>();
-            var tripService = new TripService(userSession);
             userSession.GetLoggedUser().Returns((User) null);
-            var user = new User();
 
-            Action result = () => tripService.GetTripsByUser(user);
+            Action result = () => tripService.GetTripsByUser(defaultUser);
 
             result.Should().Throw<UserNotLoggedInException>();
         }  
         
         [Test]
         public void ReturnEmptyListIfLoggedUserIsNotCurrentUser() {
-            var userSession = Substitute.For<IUserSession>();
-            var tripService = new TripService(userSession);
-            var returnedUser = new User();
-            userSession.GetLoggedUser().Returns(returnedUser);
-            var user = new User();
+            var anotherUser = new User();
+            userSession.GetLoggedUser().Returns(anotherUser);
 
-            var result = tripService.GetTripsByUser(user);
+            var result = tripService.GetTripsByUser(defaultUser);
 
             result.Should().BeEmpty();
         }
         
         [Test]
         public void ReturnEmptyListIfLoggedUserIsNotAFriend() {
-            var user = new User();
-            var userSession = Substitute.For<IUserSession>();
-            userSession.GetLoggedUser().Returns(user);
-            var tripService = new TripService(userSession);
+            userSession.GetLoggedUser().Returns(defaultUser);
             var friend = new User();
-            user.AddFriend(friend);
+            defaultUser.AddFriend(friend);
 
-            var result = tripService.GetTripsByUser(user);
+            var result = tripService.GetTripsByUser(defaultUser);
 
             result.Should().BeEmpty();
         }
