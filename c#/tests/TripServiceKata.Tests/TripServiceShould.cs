@@ -18,6 +18,19 @@ namespace TripServiceKata.Tests {
             Action result = () => tripService.GetTripsByUser(user);
 
             result.Should().Throw<UserNotLoggedInException>();
+        }  
+        
+        [Test]
+        public void ACharacterizationTest() {
+            var user = new User();
+            var userReturned = new User();
+            var userSession = Substitute.For<IUserSession>();
+            userSession.GetLoggedUser().Returns(userReturned);
+            var tripService = new TripService(userSession);
+
+            Action result = () => tripService.GetTripsByUser(user);
+
+            result.Should().Throw<UserNotLoggedInException>();
         }
     }
 }
