@@ -66,7 +66,7 @@ namespace TripServiceKata.Tests {
         
         
         [Test]
-        public void ACharacterizationTest()
+        public void ReturnsAListWIthOneTripWhenATripIsAdded()
         {
             defaultUser.AddFriend(defaultUser);
             userSession.GetLoggedUser().Returns(defaultUser);
