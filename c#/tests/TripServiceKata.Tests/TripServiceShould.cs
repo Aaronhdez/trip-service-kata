@@ -13,6 +13,7 @@ namespace TripServiceKata.Tests {
         private TripService tripService;
         private User defaultUser;
         private ITripDAO tripDao;
+        private Trip defautlTrip;
 
         [SetUp]
         public void SetUp() {
@@ -20,6 +21,7 @@ namespace TripServiceKata.Tests {
             tripDao = Substitute.For<ITripDAO>();
             tripService = new TripService(userSession, tripDao);
             defaultUser = new User();
+            defautlTrip = new Trip();
         }
 
         [Test]
@@ -69,26 +71,24 @@ namespace TripServiceKata.Tests {
         {
             defaultUser.AddFriend(defaultUser);
             userSession.GetLoggedUser().Returns(defaultUser);
-            var trip = new Trip();
-            tripDao.FindTripsByUser(defaultUser).Returns(new List<Trip>(new[] { trip }));
+            tripDao.FindTripsByUser(defaultUser).Returns(new List<Trip>(new[] { defautlTrip }));
 
             var result = tripService.GetTripsByUser(defaultUser);
 
-            result.Should().ContainEquivalentOf(trip);
+            result.Should().ContainEquivalentOf(defautlTrip);
         }
 
         [Test]
         public void ReturnsAListWithOneTripWhenATripIsAddedToAFriend()
         {
             var friend = new User();
-            var trip = new Trip();
             friend.AddFriend(defaultUser);
             userSession.GetLoggedUser().Returns(defaultUser);
-            tripDao.FindTripsByUser(friend).Returns(new List<Trip>(new[] { trip }));
+            tripDao.FindTripsByUser(friend).Returns(new List<Trip>(new[] { defautlTrip }));
 
             var result = tripService.GetTripsByUser(friend);
 
-            result.Should().ContainEquivalentOf(trip);
+            result.Should().ContainEquivalentOf(defautlTrip);
         }
     }
 }
